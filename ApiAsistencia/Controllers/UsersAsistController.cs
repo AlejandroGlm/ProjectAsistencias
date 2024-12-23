@@ -19,7 +19,6 @@ namespace ApiAsistencia.Controllers
             _context = context;
         }
 
-        // Endpoint para registrar un nuevo usuario
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] Usuarios user)
         {
@@ -49,8 +48,7 @@ namespace ApiAsistencia.Controllers
         }
 
 
-        // Endpoint para obtener un usuario por ID
-        [HttpGet("{id}")]
+         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _context.Usuarios.FindAsync(id);
@@ -80,7 +78,7 @@ namespace ApiAsistencia.Controllers
 
             return Ok(asistencias);
         }
-
+         
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
@@ -105,15 +103,13 @@ namespace ApiAsistencia.Controllers
 
             if (asistencia != null)
             {
-                // Registrar la hora de salida
-                asistencia.Check_Salida = DateTime.Now;
+                 asistencia.Check_Salida = DateTime.Now;
                 _context.Asist_Usuarios.Update(asistencia);
                 await _context.SaveChangesAsync();
             }
             else
             {
-                // Registrar la hora de entrada
-                var nuevaAsistencia = new Asist_Usuarios
+                 var nuevaAsistencia = new Asist_Usuarios
                 {
                     Id_Usuario = user.id_Usuario,
                     Check_Entrada = DateTime.Now

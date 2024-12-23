@@ -9,18 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectAsistencia.Entity
 {
-    //public class Usuarios
-    //{
-
-    //    public int id_Usuario { get; set; }
-    //    public string email { get; set; }
-    //    public string password { get; set; }
-    //    public string UsuarioNombre { get; set; }
-
-    //    public string Rol { get; set; }
-    //    public DateTime check_entrada { get; set; }
-    //    public DateTime check_salida { get; set; }
-    //}
+   
 
     [Table("Usuario")]
     public class Usuarios
