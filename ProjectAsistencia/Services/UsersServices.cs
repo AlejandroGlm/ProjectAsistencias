@@ -11,17 +11,19 @@ namespace ProjectAsistencia.Services
     {
         private readonly HttpClient _httpClient;
 
+        //modificar si es necesario, para manejar la url de la API
+        private const string BaseUrl = "https://localhost:44341/api/UsersAsist";
+
         public UsersServices(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
 
-
         public async Task<List<Asist_Usuarios>> GetAsistenciasConNombres()
         {
             try
             {
-                var response = await _httpClient.GetAsync("https://localhost:44341/api/UsersAsist/AsistenciasConNombres");
+                var response = await _httpClient.GetAsync($"{BaseUrl}/AsistenciasConNombres");
                 response.EnsureSuccessStatusCode();
 
                 var asistencias = await response.Content.ReadFromJsonAsync<List<Asist_Usuarios>>();
@@ -37,7 +39,7 @@ namespace ProjectAsistencia.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/UsersAsist/login", usuarios);
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/login", usuarios);
                 response.EnsureSuccessStatusCode();
                 return response.IsSuccessStatusCode;
             }
@@ -52,7 +54,7 @@ namespace ProjectAsistencia.Services
             try
             {
                 var checkOutRequest = new { Id_Usuario = idUsuario };
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/UsersAsist/CheckOut", checkOutRequest);
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/CheckOut", checkOutRequest);
                 response.EnsureSuccessStatusCode();
                 return response.IsSuccessStatusCode;
             }
@@ -67,7 +69,7 @@ namespace ProjectAsistencia.Services
             try
             {
                 var checkInRequest = new { Id_Usuario = idUsuario };
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/UsersAsist/CheckIn", checkInRequest);
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/CheckIn", checkInRequest);
                 response.EnsureSuccessStatusCode();
                 return response.IsSuccessStatusCode;
             }
@@ -81,7 +83,7 @@ namespace ProjectAsistencia.Services
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("https://localhost:44341/api/UsersAsist/register", usuario);
+                var response = await _httpClient.PostAsJsonAsync($"{BaseUrl}/register", usuario);
                 response.EnsureSuccessStatusCode();
                 return response.IsSuccessStatusCode;
             }
