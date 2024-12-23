@@ -1,0 +1,92 @@
+﻿@page "/AddUser"
+@using ProjectAsistencia.Services
+@using ProjectAsistencia.Entity
+@inject UsersServices usersService
+@inject NavigationManager navigationManager
+@inject AlertaService alertaService
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg" style="max-width: 400px; width: 100%;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Registrar Usuario</h3>
+            <EditForm Model="@newUser" OnValidSubmit="HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group my-3">
+                    <label for="inputNombre" class="form-label">Nombre</label>
+                    <InputText @bind-Value="newUser.nombre" id="inputNombre" class="form-control" />
+                </div>
+
+                <div class="form-group my-3">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <InputText @bind-Value="newUser.email" id="inputEmail" class="form-control" />
+                </div>
+
+                <div class="form-group my-3">
+                    <label for="inputPassword" class="form-label">Contraseña</label>
+                    <InputText type="password" @bind-Value="newUser.password" id="inputPassword" class="form-control" />
+                </div>
+
+                <div class="form-group my-3">
+                    <label for="inputRol" class="form-label">Rol</label>
+                    <InputText @bind-Value="newUser.rol" id="inputRol" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block w-100" disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ms-2">Cargando...</span>
+                    }
+                    else
+                    {
+                        <span>Registrar</span>
+                    }
+                </button>
+            </EditForm>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger mt-3">@errorMessage</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private Usuarios newUser = new Usuarios();
+    private bool isLoading = false;
+    private string errorMessage = string.Empty;
+
+    private async Task HandleValidSubmit()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            // Llamar al método de registro del servicio
+            bool result = await usersService.Register(newUser);
+
+            if (result)
+            {
+                await alertaService.alerta("Éxito", "Usuario registrado correctamente.");
+                navigationManager.NavigateTo("/MostrarRegistros");
+            }
+            else
+            {
+                errorMessage = "Error al registrar el usuario.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al registrar el usuario: {ex.Message}";
+            Console.WriteLine($"Error detallado: {ex}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

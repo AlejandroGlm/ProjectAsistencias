@@ -1,0 +1,59 @@
+﻿@page "/MostrarRegistros"
+
+@using ProjectAsistencia.Services
+@using ProjectAsistencia.Entity
+@inject UsersServices usersService
+@inject NavigationManager navigationManager
+
+<h3>Mostrar Registros de Asistencia</h3>
+
+@if (asistencias == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else if (asistencias.Count == 0)
+{
+    <p>No se encontraron registros de asistencia.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre del Usuario</th>
+                <th>Hora de Entrada</th>
+                <th>Hora de Salida</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var asistencia in asistencias)
+            {
+                <tr>
+                    <td>@asistencia.UsuarioNombre</td>
+                    <td>@asistencia.check_entrada</td>
+                    <td>@(asistencia.check_salida.HasValue ? asistencia.check_salida.Value.ToString() : "No registrada")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Asist_Usuarios> asistencias;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            asistencias = await usersService.GetAsistenciasConNombres();
+            if (asistencias == null)
+            {
+                asistencias = new List<Asist_Usuarios>();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar las asistencias: {ex.Message}");
+        }
+    }
+}
