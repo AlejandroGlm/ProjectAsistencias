@@ -81,7 +81,6 @@ namespace ApiAsistencia.Controllers
             return Ok(asistencias);
         }
 
-        // Login de empleados
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] LoginRequest loginRequest)
