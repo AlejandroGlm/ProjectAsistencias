@@ -69,5 +69,10 @@ Al finalizar el turno, el tiempo se queda registrado.
 
 
 
+## 👨‍💻 Autor
+
+**Osvaldo Gaspar**  
+GitHub: [@AlejandroGlm](https://github.com/AlejandroGlm)
+
 
 
