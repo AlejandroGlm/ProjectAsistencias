@@ -1,6 +1,7 @@
 # Project Asistencia
 
 Project Asistencia es una aplicación para gestionar asistencias de usuarios. Este proyecto consiste de dos proyectos: la API (`ApiAsistencia`) y la aplicación cliente (`ProjectAsistencia`).
+Esta aplicación fue desarrollada en MAUI Net 9
 
 ## Configuración del Proyecto
 
@@ -50,5 +51,23 @@ public class UsersServices
             _httpClient = httpClient;
         }
 ```
+
+### Para iniciar sesión
+Ir a la sección login.
+Usuario: Juan123
+Password: admin123
+
+se mostrara el panel de control y el historial por turnos.
+
+![image](https://github.com/user-attachments/assets/6060afb6-d5fc-4826-9537-03a99753754e)
+
+Al iniciar el turno el reloj comienza a correr.
+
+![image](https://github.com/user-attachments/assets/5f797285-b735-45fc-bd7d-9cb8eb62af9b)
+
+Al finalizar el turno, el tiempo se queda registrado.
+
+
+
 
 
